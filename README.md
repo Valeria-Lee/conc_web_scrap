@@ -6,6 +6,6 @@
 3. Ejecutar con python main.py
 
 ## Screenshots.
-![App screenshot, Shakira prueba](web_scrap_start/ss_web_scrap.png)
-![App screenshot, Internet prueba](web_scrap_start/ss_web_scrap_2.png)
+![App screenshot, Shakira prueba](https://github.com/Valeria-Lee/conc_web_scrap/blob/main/ss_web_scrap.png)
+![App screenshot, Internet prueba](https://github.com/Valeria-Lee/conc_web_scrap/blob/main/ss_web_scrap_2.png)
 
