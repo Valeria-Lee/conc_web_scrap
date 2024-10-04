@@ -1,30 +1,37 @@
 import requests
 from bs4 import BeautifulSoup
-import time
+import asyncio 
+import aiohttp
 
-def main():
-    search_input = input("Ingresa algun campo a buscar: -> ")
+async def fetch(session, url):
+    async with session.get(url) as response:
+        if response.status == 200:
+            return await response.text()
+        else:
+            print("La busqueda no es correcta")
+            return None
 
-    if search_input != "":
-        url = f'https://en.wikipedia.org/wiki/{search_input}'
-        respuesta = requests.get(url)
-
-        if respuesta.status_code == 200:
-            print("conexion exitosa!")
-            soup = BeautifulSoup(respuesta.text, 'html.parser')
-
+async def scrape_from_wikipedia(search_input):
+    url = f'https://en.wikipedia.org/wiki/{search_input}'
+    async with aiohttp.ClientSession() as session:
+        html_content = await fetch(session, url)
+        if html_content:
+            soup = BeautifulSoup(html_content, 'html.parser')
             definitions = soup.find_all('p')
 
             for definition in definitions:
                 if not definition.has_attr('class'):
                     print(definition.get_text())
                     break
-        else:
-            print("error en la peticion")
+
+def main():
+    search_input = input("Ingresa una busqueda: -> ")
+
+    if search_input:
+        asyncio.run(scrape_from_wikipedia(search_input))
     else:
         print("La busqueda no es correcta")
-        time.sleep(2)
-        main()
+        asyncio.run(main())
 
 if __name__ == '__main__':
     main()
